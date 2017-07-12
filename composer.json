@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "psr-4": {
+      "ZohoBooks\\"   : "ZohoBooks/",
+      "ZohoAuth\\"    : "ZohoAuth/",
+      "ZohoRequest\\" : "ZohoRequest/"
+    },
+    "files":[]
+  }
+}
