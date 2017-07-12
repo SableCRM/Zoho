@@ -1,11 +1,12 @@
 <?php
 
 //	use ZohoAuth\CreateBooksAuth;
+//	use ZohoAuth\CreateCRMAuth;
 //	use ZohoRequest\MakeRequest;
 //
 //	require_once "vendor/autoload.php";
 //
-//	$auth = new CreateBooksAuth(new MakeRequest());
+//	$auth = new CreateCRMAuth(new MakeRequest(), "finalCRMTest");
 //
 //	$username = "ainsley.clarke@guardme.com";
 //	$password = "Afc5446000";
