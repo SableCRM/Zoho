@@ -2,13 +2,11 @@
 
 	namespace ZohoAuth;
 
-	use ZohoRequest\IMakeRequest;
-
 	class CreateBooksAuth extends AbstractAuth
 	{
-		public function __construct(IMakeRequest $request, $name = null)
+		public function __construct($name = null)
 		{
-			parent::__construct($request, $name);
+			parent::__construct($name);
 
 			$this->scope = "ZohoBooks/booksapi";
 		}

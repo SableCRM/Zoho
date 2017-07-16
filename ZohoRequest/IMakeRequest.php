@@ -2,17 +2,11 @@
 
 	namespace ZohoRequest;
 
-	interface IMakeRequest
+	interface IMakeRequest extends IRequestObject
 	{
 		public function setUrl($url);
-
 		public function getUrl();
-
+		public function setParams($params);
+		public function makeRequest($method);
 		public function getResponse();
-
-		public function setParams(array $params);
-
-		public function getParams();
-
-		public function makeRequest();
 	}

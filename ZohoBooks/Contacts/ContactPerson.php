@@ -21,20 +21,6 @@
 
 		private $isPrimaryContact;
 
-		public function __construct(IContact $contact = null)
-		{
-			if($contact != null)
-			{
-				$this->setFirstName($contact->getFirstName());
-
-				$this->setLastName($contact->getLastName());
-
-				$this->setEmail($contact->getEmail());
-
-				$this->setPhone($contact->getPhone());
-			}
-		}
-
 		public function setSalutation($salutation)
 		{
 			$this->salutation = $salutation;
@@ -77,9 +63,9 @@
 			return $this;
 		}
 
-		public function setIsPrimarycontact($isPrimaryContact)
+		public function setIsPrimarycontact()
 		{
-			$this->isPrimaryContact = $isPrimaryContact;
+			$this->isPrimaryContact = true;
 
 			return $this;
 		}
@@ -123,13 +109,13 @@
 		{
 			$contactPerson = new stdClass();
 
-			$contactPerson->salutation = $this->salutation;
-			$contactPerson->first_name = $this->firstName;
-			$contactPerson->last_name = $this->lastName;
-			$contactPerson->email = $this->email;
-			$contactPerson->phone = $this->phone;
-			$contactPerson->mobile = $this->mobile;
-			$contactPerson->is_primary_contact = $this->isPrimaryContact;
+			if($this->salutation) $contactPerson->salutation = $this->getSalutation();
+			if($this->firstName) $contactPerson->first_name = $this->getFirstName();
+			if($this->lastName) $contactPerson->last_name = $this->getLastName();
+			if($this->email) $contactPerson->email = $this->getEmail();
+			if($this->phone) $contactPerson->phone = $this->getPhone();
+			if($this->mobile) $contactPerson->mobile = $this->getMobile();
+			if($this->isPrimaryContact) $contactPerson->is_primary_contact = $this->getIsPrimaryContact();
 
 			return json_encode($contactPerson);
 		}

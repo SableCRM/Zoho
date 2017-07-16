@@ -2,14 +2,13 @@
 
 	namespace ZohoBooks\Contacts;
 
-	use function array_walk;
 	use Exception;
 	use stdClass;
 	use ZohoBooks\ArrayValues\LanguageCodes;
 	use ZohoBooks\Objects\IAddress;
 	use ZohoRequest\IRequestObject;
 
-	class Contact implements IContact, IRequestObject
+	class Contact implements IContact
 	{
 		private $contactName;
 
@@ -91,7 +90,7 @@
 //
 //		private $creditnoteEmailTemplateId;
 
-		private function setContactName()
+		public function setContactName()
 		{
 			$this->contactName = $this->firstName . " " . $this->lastName;
 
@@ -220,7 +219,7 @@
 			unset($this->contactPersons[$index]);
 		}
 
-		public function getContactPerson(IContactPerson $contactPerson)
+		public function getContactPerson()
 		{
 			$index = array_search($contactPerson, $this->contactPersons);
 
@@ -257,26 +256,63 @@
 			return $this->phone;
 		}
 
+		public function getCompanyName()
+		{
+			return $this->companyName;
+		}
+
+		public function getFacebook()
+		{
+			return $this->facebook;
+		}
+
+		public function getTwitter()
+		{
+			return $this->twitter;
+		}
+
+		public function getLanguageCode()
+		{
+			return $this->languageCode;
+		}
+
+		public function getBillingAddress() : IRequestObject
+		{
+			return $this->billingAddress;
+		}
+
+		public function getShippingAddress() : IRequestObject
+		{
+			return $this->shippingAddress;
+		}
+
 		public function getParams()
 		{
+			$contactPersons = [];
+
 			$contact = new stdClass();
 
-			$contact->contact_name = $this->contactName;
-			$contact->company_name = $this->companyName;
-			$contact->first_name = $this->firstName;
-			$contact->last_name = $this->lastName;
-			$contact->email = $this->email;
-			$contact->phone = $this->phone;
-			$contact->facebook = $this->facebook;
-			$contact->twitter = $this->twitter;
-			$contact->language_code = $this->languageCode;
-			$contact->billing_address = $this->billingAddress->getParams();
-			$contact->shipping_address = $this->shippingAddress->getParams();
-//			array_walk($this->contactPersons, function($contactPerson) use($contact)
-//				{
-//					$contact->contact_persons .= $contactPerson->getParams();
-//				}
-//			);
+			if($this->contactName) $contact->contact_name = $this->getContactName();
+			if($this->companyName) $contact->company_name = $this->getCompanyName();
+			if($this->firstName) $contact->first_name = $this->getFirstName();
+			if($this->lastName) $contact->last_name = $this->getLastName();
+			if($this->email) $contact->email = $this->getEmail();
+			if($this->phone) $contact->phone = $this->getPhone();
+			if($this->facebook) $contact->facebook = $this->getFacebook();
+			if($this->twitter) $contact->twitter = $this->getTwitter();
+			if($this->languageCode) $contact->language_code = $this->getLanguageCode();
+			if($this->billingAddress) $contact->billing_address = $this->getBillingAddress()->getParams();
+			if($this->shippingAddress) $contact->shipping_address = $this->getShippingAddress()->getParams();
+
+			foreach($this->getContactPersons() as $contactPerson)
+			{
+				if(count($this->contactPersons) > 0)
+				{
+					$contactPersons[] = $contactPerson->getParams();
+
+					$contact->contact_persons = $contactPersons;
+				}
+			};
 
 			return json_encode($contact);
 		}

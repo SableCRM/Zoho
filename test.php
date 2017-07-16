@@ -1,12 +1,8 @@
 <?php
 
-//	use ZohoAuth\CreateBooksAuth;
-//	use ZohoAuth\CreateCRMAuth;
-//	use ZohoRequest\MakeRequest;
-//
 	require_once "vendor/autoload.php";
 //
-//	$auth = new CreateCRMAuth(new MakeRequest(), "finalCRMTest");
+//	$auth = new CreateBooksAuth("finalBooksTest");
 //
 //	$username = "ainsley.clarke@guardme.com";
 //	$password = "Afc5446000";
@@ -16,12 +12,12 @@
 //	$result = $result->getResult();
 //
 //	echo "<pre>";
-//	print_r($result);
+//	print_r($result); exit;
 
 	use ZohoBooks\Contacts\Contact;
 	use ZohoBooks\Contacts\ContactPerson;
-	use ZohoBooks\Contacts\Create;
 	use ZohoBooks\Objects\Address;
+	use ZohoBooks\Operations\BooksApi;
 
 	$contact = new Contact();
 
@@ -31,73 +27,88 @@
 
 	$shipping = new Address();
 
+	$billing = new Address();
+
 	$shipping->setAttention("Shipping Address")
 		->setAddress1("45 Route 34")
-		->setAddress2("Second Floor")
+		->setAddress2("Second Floor");
+
+	$shipping
 		->setCity("Old Bridge")
-		->setStateCode("NJ")
-		->setZip("08857")
+		//->setStateCode("NJ")
+		->setState("NJ")
+		->setZip("08857");
+
+	$shipping
 		->setCountry("USA")
 		->setFax("(222) 222-2222");
+
+	$billing->setAttention("Billing Address")
+		->setAddress1("602 East 24th Street")
+		->setAddress2("First Floor");
+
+	$billing
+		->setCity("Paterson")
+		//->setStateCode("NJ")
+		->setState("NJ")
+		->setZip("07514");
+
+	$billing
+		->setCountry("USA");
+		//->setFax("(111) 111-1111");
 
 	$jeff
 		->setSalutation("Mr")
 		->setFirstName("Jeff")
-		->setLastName("Miller")
-		->setEmail("jeff.miller@gmail.com");
+		->setLastName("Miller");
 
 	$jeff
+		->setEmail("jeff.miller@gmail.com")
 		->setPhone("(201) 859-8956")
-		->setMobile("(845) 458-9658")
-		->setIsPrimaryContact(true);
+		->setMobile("(845) 458-9658");
+
+	//$jeff->setIsPrimaryContact();
 
 	$sheila
 		->setSalutation("Mrs")
 		->setFirstName("Sheila")
-		->setLastName("Davis")
-		->setEmail("Sheila.Davis@gmail.com");
+		->setLastName("Davis");
 
 	$sheila
+		->setEmail("Sheila.Davis@gmail.com")
 		->setPhone("(718) 224-8745")
-		->setMobile("(908) 418-1125")
-		->setIsPrimaryContact(false);
+		->setMobile("(908) 418-1125");
+
+	$sheila->setIsPrimaryContact();
 
 	$contact
-		->setFirstName("Ainsley")
-		->setLastName("Clarke")
-		->setBillingAddress(
-			(new Address())
-				->setAttention("Billing Address")
-				->setAddress1("602 East 24th Street")
-				->setAddress2("First Floor")
-				->setCity("Paterson")
-				->setStateCode("NJ")
-				->setZip("07514")
-				->setCountry("USA")
-				->setFax("(111) 111-1111")
-		);
+		->setFirstName("Raza")
+		->setLastName("Man")
+		->setPhone("(732) 425-2814");
+
+	$contact
+		->setCompanyName("GuardMe Security")
+		//->setTwitter("www.twitter.com")
+		->setEmail("ainsley.clarke@guardme.com")
+		->setBillingAddress($billing);
+
+	$contact
+		->setFacebook("http://www.facebook.com")
+		->setLanguageCode("en");
 
 	$contact
 		->setShippingAddress($shipping);
 
-	$contact
-		->setCompanyName("GuardMe Security")
-		->setPhone("(732) 425-2814")
-		->setEmail("ainsley.clarke@guardme.com");
-
-	$contact
-		->setFacebook("ainsley@facebook.com")
-		->setTwitter("ainsley@twitter.com")
-		->setLanguageCode("en");
-
-	$contact->addContactPerson($jeff);
-	$contact->addContactPerson($sheila);
+	//$contact->addContactPerson($jeff);
+	//$contact->addContactPerson($sheila);
 
 	echo "<pre>";
 	//echo json_encode($contact);
 	//print_r($contact->getParams());
 
-	$create = new Create("647b8ac917b9fdab8c0d33a50685cc6a", "");
+	$books = new BooksApi("647b8ac917b9fdab8c0d33a50685cc6a", "136886048");
 
-	print_r($create->request($contact));
+	$books->Update(25);
+
+	print_r($books);
 

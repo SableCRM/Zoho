@@ -2,13 +2,15 @@
 
 	namespace ZohoRequest;
 
+	use const CURLOPT_CUSTOMREQUEST;
+
 	class MakeRequest implements IMakeRequest
 	{
-		private $url;
+		protected $url;
 
-		private $params;
+		protected $params;
 
-		private $response;
+		protected $response;
 
 		public function setUrl($url)
 		{
@@ -25,7 +27,7 @@
 			return $this->response;
 		}
 
-		public function setParams(array $params)
+		public function setParams($params)
 		{
 			$this->params = $params;
 		}
@@ -44,7 +46,7 @@
 			return $data;
 		}
 
-		public function makeRequest()
+		public function makeRequest($method)
 		{
 			$ch = curl_init($this->url);
 
@@ -54,11 +56,7 @@
 
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParams());
-
-			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 
 			$this->response = curl_exec($ch);
 

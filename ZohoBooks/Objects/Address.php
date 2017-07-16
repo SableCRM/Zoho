@@ -3,7 +3,6 @@
 	namespace ZohoBooks\Objects;
 
 	use Exception;
-	use function json_encode;
 	use stdClass;
 	use ZohoRequest\IRequestObject;
 
@@ -144,15 +143,15 @@
 		{
 			$address = new stdClass();
 
-			$address->attention = $this->attention;
-			$address->address = $this->address;
-			$address->street2 = $this->street2;
-			$address->state_code = $this->stateCode;
-			$address->city = $this->city;
-			$address->state = $this->state;
-			$address->zip = $this->zip;
-			$address->country = $this->country;
-			$address->fax = $this->fax;
+			if($this->attention) $address->attention = $this->getAttention();
+			if($this->address) $address->address = $this->getAddress1();
+			if($this->street2) $address->street2 = $this->getAddress2();
+			if($this->stateCode) $address->state_code = $this->getStateCode();
+			if($this->city) $address->city = $this->getCity();
+			if($this->state) $address->state = $this->getState();
+			if($this->zip) $address->zip = $this->getZip();
+			if($this->country) $address->country = $this->getCountry();
+			if($this->fax) $address->fax = $this->getFax();
 
 			return json_encode($address);
 		}
