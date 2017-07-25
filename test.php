@@ -14,6 +14,7 @@
 //	echo "<pre>";
 //	print_r($result); exit;
 
+	use ZohoBooks\ArrayValues\LanguageCodes;
 	use ZohoBooks\Contacts\Contact;
 	use ZohoBooks\Contacts\ContactPerson;
 	use ZohoBooks\Objects\Address;
@@ -94,7 +95,7 @@
 
 	$contact
 		->setFacebook("http://www.facebook.com")
-		->setLanguageCode("en");
+		->setLanguageCode();
 
 	$contact
 		->setShippingAddress($shipping);
@@ -108,7 +109,7 @@
 
 	$books = new BooksApi("647b8ac917b9fdab8c0d33a50685cc6a", "136886048");
 
-	$books->Update(25);
+	$books->Update($contact);
 
 	print_r($books);
 

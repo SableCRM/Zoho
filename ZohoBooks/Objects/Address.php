@@ -6,7 +6,7 @@
 	use stdClass;
 	use ZohoRequest\IRequestObject;
 
-	class Address implements IAddress, IRequestObject
+	class Address implements IAddress
 	{
 		private $attention;
 
@@ -154,5 +154,20 @@
 			if($this->fax) $address->fax = $this->getFax();
 
 			return json_encode($address);
+		}
+
+		public function getDescription()
+		{
+			// TODO: Implement getDescription() method.
+		}
+
+		public function setId($id)
+		{
+			// TODO: Implement setId() method.
+		}
+
+		public function getId()
+		{
+			// TODO: Implement getId() method.
 		}
 	}

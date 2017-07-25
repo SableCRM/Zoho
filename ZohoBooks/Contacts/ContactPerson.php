@@ -3,9 +3,8 @@
 	namespace ZohoBooks\Contacts;
 
 	use stdClass;
-	use ZohoRequest\IRequestObject;
 
-	class ContactPerson implements IContactPerson, IRequestObject
+	class ContactPerson implements IContactPerson
 	{
 		private $salutation;
 
@@ -118,5 +117,20 @@
 			if($this->isPrimaryContact) $contactPerson->is_primary_contact = $this->getIsPrimaryContact();
 
 			return json_encode($contactPerson);
+		}
+
+		public function getDescription()
+		{
+			// TODO: Implement getDescription() method.
+		}
+
+		public function setId($id)
+		{
+			// TODO: Implement setId() method.
+		}
+
+		public function getId()
+		{
+			// TODO: Implement getId() method.
 		}
 	}

@@ -35,11 +35,11 @@
 			$this->request();
 		}
 
-		public function Update($id)
+		public function Update(IRequestObject $obj)
 		{
 			$this->method = "PUT";
 
-			$this->url = "https://books.zoho.com/api/v3/contacts/".$id."?".$this->getParams();
+			$this->url = "https://books.zoho.com/api/v3/".$obj->getDescription()."/".$obj->getId()."?".$this->getParams();
 
 			$this->request();
 		}

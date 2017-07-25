@@ -2,7 +2,9 @@
 
 	namespace ZohoBooks\Objects;
 
-	interface IAddress
+	use ZohoRequest\IRequestObject;
+
+	interface IAddress extends IRequestObject
 	{
 		public function getAttention();
 		public function getAddress1();

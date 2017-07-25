@@ -10,6 +10,10 @@
 
 	class Contact implements IContact
 	{
+		private $id;
+
+		private $description;
+
 		private $contactName;
 
 		private $companyName;
@@ -315,5 +319,20 @@
 			};
 
 			return json_encode($contact);
+		}
+
+		public function getDescription()
+		{
+			return $this->description;
+		}
+
+		public function setId($id)
+		{
+			$this->id = $id;
+		}
+
+		public function getId()
+		{
+			return $this->id;
 		}
 	}
